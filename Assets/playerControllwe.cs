@@ -6,6 +6,7 @@ public class playerControllwe : MonoBehaviour
 {
     public float speed;
     public Rigidbody2D rb;
+
     private void Update()
     {
         float x = Input.GetAxis("Horizontal");
@@ -16,7 +17,7 @@ public class playerControllwe : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, 10f);
         }
-    }
 
+    }
 }
 
