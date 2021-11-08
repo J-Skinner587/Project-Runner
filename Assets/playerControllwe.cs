@@ -6,13 +6,15 @@ public class playerControllwe : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator anim;
-    private enum State {Idle, Running, jumping}
+    private enum State {Idle, running, jumping}
     private State state = State.Idle;
+    private Collider2D coll;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        coll = GetComponent<Collider2D>();
     }
 
     private void Update()
@@ -30,17 +32,18 @@ public class playerControllwe : MonoBehaviour
         {
             rb.velocity = new Vector2(5, rb.velocity.y);
             transform.localScale = new Vector2(10, 10);
-            anim.SetBool("Running", true);
+            anim.SetBool("running", true);
         }
 
         else
         {
-            anim.SetBool("Running", false);
+            anim.SetBool("running", false);
         }
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetButtonDown("Jump"))
         {
             rb.velocity = new Vector2(rb.velocity.x, 10f);
+            state = State.jumping;
         }
 
         VelocityState();
@@ -54,15 +57,19 @@ public class playerControllwe : MonoBehaviour
 
         }
 
-        if(Mathf.Abs(rb.velocity.x) > Mathf.Epsilon)
+        if(Mathf.Abs(rb.velocity.x) > 2f)
         {
-            //Going Right
-            state = State.Running;
+            //Moving
+            state = State.running;
         }
 
         else if(rb.velocity.x < .1f)
         {
-            //going left
+          
+        }
+        else
+        {    //Being Still
+            state = State.Idle;
         }
     }
 }
