@@ -4,11 +4,28 @@ using UnityEngine;
 
 public class playerControllwe : MonoBehaviour
 {
+    
+    // Basic Variables
     private Rigidbody2D rb;
     private Animator anim;
-    private enum State {Idle, running, jumping}
-    private State state = State.Idle;
     private Collider2D coll;
+
+    public int cherries = 0;
+
+    
+    
+    //FSM (finite state machine)
+    private enum State {Idle, running, jumping, falling}
+    private State state = State.Idle;
+   
+    
+    
+    
+    
+    //Inspector Variables
+    [SerializeField] private LayerMask ground;
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float jumpforce = 10f;
 
     private void Start()
     {
@@ -19,57 +36,74 @@ public class playerControllwe : MonoBehaviour
 
     private void Update()
     {
+
         float hDirection = Input.GetAxis("Horizontal");
         
         if (hDirection < 0)
         {
-            rb.velocity = new Vector2(-5, rb.velocity.y);
+            rb.velocity = new Vector2(-speed, rb.velocity.y);
             transform.localScale = new Vector2(-10, 10);
-            anim.SetBool("Running", true);
         }
 
         else if (hDirection > 0)
         {
-            rb.velocity = new Vector2(5, rb.velocity.y);
+            rb.velocity = new Vector2(speed, rb.velocity.y);
             transform.localScale = new Vector2(10, 10);
-            anim.SetBool("running", true);
         }
 
         else
         {
-            anim.SetBool("running", false);
+           
         }
 
-        if(Input.GetButtonDown("Jump"))
+        if(Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground))
         {
-            rb.velocity = new Vector2(rb.velocity.x, 10f);
+            rb.velocity = new Vector2(rb.velocity.x, jumpforce);
             state = State.jumping;
         }
 
         VelocityState();
         anim.SetInteger("State", (int)state);
+
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+      if(collision.tag == "Collectable")
+      {
+            Destroy(collision.gameObject);
+            cherries += 1;
+      }
+    }
+
 
     private void VelocityState()
     {
         if(state == State.jumping)
         {
-
+            //Jumping
+            if(rb.velocity.y < .1f)
+            {
+                state = State.falling;
+            }
+        }
+         else if(state == State.jumping)
+        {
+            if(coll.IsTouchingLayers(ground))
+            {
+                state = State.running;
+            }
         }
 
-        if(Mathf.Abs(rb.velocity.x) > 2f)
+        else if(Mathf.Abs(rb.velocity.x) > 2f)
         {
             //Moving
             state = State.running;
         }
 
-        else if(rb.velocity.x < .1f)
-        {
-          
-        }
         else
         {    //Being Still
-            state = State.Idle;
+            state = State.running;
         }
     }
 }
