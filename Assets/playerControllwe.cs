@@ -9,8 +9,7 @@ public class playerControllwe : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private Collider2D coll;
-
-    public int cherries = 0;
+    private AudioSource footstep;
 
     
     
@@ -32,6 +31,7 @@ public class playerControllwe : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         coll = GetComponent<Collider2D>();
+        footstep = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -71,8 +71,7 @@ public class playerControllwe : MonoBehaviour
     {
       if(collision.tag == "Collectable")
       {
-            Destroy(collision.gameObject);
-            cherries += 1;
+        
       }
     }
 
@@ -103,7 +102,7 @@ public class playerControllwe : MonoBehaviour
 
         else
         {    //Being Still
-            state = State.running;
+            state = State.Idle;
         }
     }
 }
