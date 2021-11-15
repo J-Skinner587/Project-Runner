@@ -78,15 +78,16 @@ public class playerControllwe : MonoBehaviour
 
     private void VelocityState()
     {
-        if(state == State.jumping)
+        if (state == State.jumping)
         {
             //Jumping
-            if(rb.velocity.y < .1f)
+            if (rb.velocity.y < .1f)
             {
-                state = State.falling;
+                return;
             }
+            state = State.falling;
         }
-         else if(state == State.jumping)
+        else if (state == State.falling)
         {
             if(coll.IsTouchingLayers(ground))
             {
