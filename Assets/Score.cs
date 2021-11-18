@@ -5,13 +5,31 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    public Transform player;
     public Text scoreText;
+    public Text hiScoreText;
+
+    public float scoreCount;
+    public float hiscoreCount;
+
+    public float pointspersecond;
+
+    public bool scoreIncreasing;
 
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = player.position.z.ToString("0");
+
+        if (scoreIncreasing)
+        {
+            scoreCount += pointspersecond * Time.deltaTime;
+        }
+        if(scoreCount > hiscoreCount)
+        {
+            hiscoreCount = scoreCount;
+        }
+
+        scoreText.text = "Score: " + Mathf.Round (scoreCount);
+        hiScoreText.text = "High Score: " + hiscoreCount;
 
     }
 }

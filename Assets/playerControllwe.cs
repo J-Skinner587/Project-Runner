@@ -67,15 +67,6 @@ public class playerControllwe : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-      if(collision.tag == "Collectable")
-      {
-        
-      }
-    }
-
-
     private void VelocityState()
     {
         if (state == State.jumping)
