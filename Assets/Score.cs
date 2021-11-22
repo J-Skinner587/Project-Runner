@@ -29,7 +29,7 @@ public class Score : MonoBehaviour
         }
 
         scoreText.text = "Score: " + Mathf.Round (scoreCount);
-        hiScoreText.text = "High Score: " + hiscoreCount;
+        hiScoreText.text = "High Score: " + Mathf.Round (hiscoreCount);
 
     }
 }

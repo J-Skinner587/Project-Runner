@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class playerControllwe : MonoBehaviour
 {
-    
+
     // Basic Variables
     private Rigidbody2D rb;
     private Animator anim;
     private Collider2D coll;
     private AudioSource footstep;
 
-    
-    
+
+
     //FSM (finite state machine)
-    private enum State {Idle, running, jumping, falling}
+    private enum State { Idle, running, jumping, falling }
     private State state = State.Idle;
-   
-    
-    
-    
-    
+
+
+
+
+
     //Inspector Variables
     [SerializeField] private LayerMask ground;
     [SerializeField] private float speed = 5f;
@@ -38,7 +38,7 @@ public class playerControllwe : MonoBehaviour
     {
 
         float hDirection = Input.GetAxis("Horizontal");
-        
+
         if (hDirection < 0)
         {
             rb.velocity = new Vector2(-speed, rb.velocity.y);
@@ -53,10 +53,10 @@ public class playerControllwe : MonoBehaviour
 
         else
         {
-           
+
         }
 
-        if(Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground))
+        if (Input.GetButtonDown("Jump") && coll.IsTouchingLayers(ground))
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpforce);
             state = State.jumping;
@@ -80,13 +80,13 @@ public class playerControllwe : MonoBehaviour
         }
         else if (state == State.falling)
         {
-            if(coll.IsTouchingLayers(ground))
+            if (coll.IsTouchingLayers(ground))
             {
                 state = State.running;
             }
         }
 
-        else if(Mathf.Abs(rb.velocity.x) > 2f)
+        else if (Mathf.Abs(rb.velocity.x) > 2f)
         {
             //Moving
             state = State.running;
