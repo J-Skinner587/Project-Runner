@@ -15,7 +15,22 @@ public class Score : MonoBehaviour
 
     public bool scoreIncreasing;
 
+
+    private void Start()
+    {
+      if(PlayerPrefs.GetInt("HighScore") != null)
+        {
+            hiscoreCount = PlayerPrefs.GetFloat("HighScore");
+        }
+    }
+
+
+
+
+
+
     // Update is called once per frame
+
     void Update()
     {
 
@@ -26,6 +41,7 @@ public class Score : MonoBehaviour
         if(scoreCount > hiscoreCount)
         {
             hiscoreCount = scoreCount;
+            PlayerPrefs.SetFloat("HighScore", hiscoreCount);
         }
 
         scoreText.text = "Score: " + Mathf.Round (scoreCount);
