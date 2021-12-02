@@ -23,14 +23,6 @@ public class Score : MonoBehaviour
             hiscoreCount = PlayerPrefs.GetFloat("HighScore");
         }
     }
-
-
-
-
-
-
-    // Update is called once per frame
-
     void Update()
     {
 
@@ -46,6 +38,5 @@ public class Score : MonoBehaviour
 
         scoreText.text = "Score: " + Mathf.Round (scoreCount);
         hiScoreText.text = "High Score: " + Mathf.Round (hiscoreCount);
-
     }
 }
