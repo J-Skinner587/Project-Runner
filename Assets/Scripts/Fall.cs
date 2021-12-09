@@ -23,6 +23,8 @@ public class Fall : MonoBehaviour
 
             theScoreManager.scoreCount = 0;
             theScoreManager.scoreIncreasing = true;
+            hiscore = 0
+
         }
     }
 }
